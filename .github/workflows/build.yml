@@ -15,8 +15,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout Repository
@@ -29,13 +27,15 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Set up Gradle
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 8.5
+          gradle-version: 8.0.2
 
       - name: Build Debug APK
-        run: gradle assembleDebug --stacktrace --info --scan --no-daemon -Dscan.termsOfServiceAgree=yes
+        run: |
+          gradle wrapper --gradle-version 8.0.2
+          ./gradlew assembleDebug --stacktrace --info --scan --no-daemon -Dscan.termsOfServiceAgree=yes
         working-directory: android
 
       - name: Upload APK Artifact
