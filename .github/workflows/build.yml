@@ -35,7 +35,7 @@ jobs:
           gradle-version: 8.2.1
 
       - name: Build Debug APK
-        run: gradle assembleDebug --stacktrace --info --scan -Dscan.termsOfServiceAgree=yes
+        run: gradle assembleDebug --stacktrace --info --scan --no-daemon -Dscan.termsOfServiceAgree=yes
         working-directory: android
 
       - name: Upload APK Artifact
