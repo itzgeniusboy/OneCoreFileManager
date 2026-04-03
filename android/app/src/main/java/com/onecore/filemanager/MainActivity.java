@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 // Replace with your GitHub raw URL for version.json
-                String urlStr = "https://raw.githubusercontent.com/REPLACE_WITH_USER/OneCoreFileManager/main/version.json";
+                String urlStr = "https://raw.githubusercontent.com/itzraviking/OneCoreFileManager/main/version.json";
                 URL url = new URL(urlStr);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 InputStream is = conn.getInputStream();
