@@ -1,0 +1,5 @@
+{
+  "name": "OneCore File Manager",
+  "description": "A powerful Android File Manager that bypasses Scoped Storage restrictions.",
+  "requestFramePermissions": []
+}
