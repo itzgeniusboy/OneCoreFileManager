@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.encounter.mod.filetool'
+    namespace 'com.onecore.filemanager'
     compileSdk 35
 
     defaultConfig {
-        applicationId "com.encounter.mod.filetool"
+        applicationId "com.onecore.filemanager"
         minSdk 24
         targetSdk 35
         versionCode 1

@@ -65,11 +65,11 @@ export default function App() {
               <Zap className="w-5 h-5 text-white fill-current" />
             </div>
             <span className="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-              OneCore APK Builder
+              OneCore Dashboard
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Documentation</a>
+            <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">Help</a>
             <div className="h-4 w-px bg-white/10" />
             <Github className="w-5 h-5 text-gray-400 hover:text-white cursor-pointer transition-colors" />
           </div>
@@ -86,10 +86,10 @@ export default function App() {
               className="space-y-4"
             >
               <h1 className="text-5xl font-extrabold tracking-tight leading-tight">
-                Build <span className="text-purple-500">OneCore</span> File Manager
+                <span className="text-purple-500">OneCore</span> File Manager
               </h1>
               <p className="text-lg text-gray-400 leading-relaxed">
-                Automate your Android APK builds with GitHub Actions. This tool bypasses Scoped Storage restrictions on Android 11-17.
+                The ultimate solution for Android Scoped Storage. Access, edit, and manage files in Android/data and Android/obb with ease.
               </p>
             </motion.div>
 

@@ -1,5 +1,5 @@
 {
   "name": "OneCore File Manager",
-  "description": "A powerful Android File Manager that bypasses Scoped Storage restrictions.",
+  "description": "Professional Android File Manager for Scoped Storage (Android/data & Android/obb).",
   "requestFramePermissions": []
 }
