@@ -25,19 +25,26 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: gradle
 
-      # ❗ Gradle version downgrade fix
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 7.6   # ✅ FIX
+          gradle-version: 7.6
+
+      - name: Generate Gradle Wrapper
+        run: |
+          if [ ! -f gradlew ]; then
+            gradle wrapper --gradle-version 7.6
+          fi
+        working-directory: android
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
         working-directory: android
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.app_name }}-${{ github.event.inputs.app_version }}.apk
+          name: ${{ github.event.inputs.app_name }}-${{ github.event.inputs.app_version }}-debug.apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
