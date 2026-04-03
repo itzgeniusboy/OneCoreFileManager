@@ -25,19 +25,19 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
+      # ❗ Gradle version downgrade fix
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 8.5
+          gradle-version: 7.6   # ✅ FIX
 
       - name: Build Debug APK
-        run: gradle assembleDebug --stacktrace --info --scan --no-daemon -Dscan.termsOfServiceAgree=yes
+        run: ./gradlew assembleDebug --stacktrace
         working-directory: android
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.app_name }}-${{ github.event.inputs.app_version }}-debug.apk
+          name: ${{ github.event.inputs.app_name }}-${{ github.event.inputs.app_version }}.apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
