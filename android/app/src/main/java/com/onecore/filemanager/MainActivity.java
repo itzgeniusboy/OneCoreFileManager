@@ -25,6 +25,13 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,8 +92,54 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btnData).setOnClickListener(v -> requestSAF("data"));
         findViewById(R.id.btnObb).setOnClickListener(v -> requestSAF("obb"));
+        findViewById(R.id.btnTelegram).setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/OneCoreStore"));
+            startActivity(intent);
+        });
 
         checkPermissions();
+        checkForUpdates();
+    }
+
+    private void checkForUpdates() {
+        new Thread(() -> {
+            try {
+                // Replace with your GitHub raw URL for version.json
+                String urlStr = "https://raw.githubusercontent.com/REPLACE_WITH_USER/OneCoreFileManager/main/version.json";
+                URL url = new URL(urlStr);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) sb.append(line);
+                
+                JSONObject json = new JSONObject(sb.toString());
+                int latestVersionCode = json.getInt("versionCode");
+                String downloadUrl = json.getString("downloadUrl");
+
+                int currentVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+
+                if (latestVersionCode > currentVersionCode) {
+                    runOnUiThread(() -> showUpdateDialog(downloadUrl));
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Update check failed: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    private void showUpdateDialog(String downloadUrl) {
+        new AlertDialog.Builder(this)
+                .setTitle("New Update Available")
+                .setMessage("A new version of OneCore File Manager is available. Would you like to download and install the latest update?")
+                .setPositiveButton("Download Now", (dialog, which) -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl));
+                    startActivity(intent);
+                })
+                .setNegativeButton("Later", null)
+                .setCancelable(false)
+                .show();
     }
 
     private void checkPermissions() {
